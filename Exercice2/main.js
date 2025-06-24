@@ -30,9 +30,10 @@ function coffeeReady(i, randomNumber){
     result.appendChild(p);
 }
 
-
-document.getElementById("startBtn").addEventListener('click', function() {
-    const nb_coffee = document.getElementById("coffeeInput").value;
-    startPreparation(nb_coffee);
+if (document.getElementById("startBtn")){
+        document.getElementById("startBtn").addEventListener('click', function() {
+            const nb_coffee = document.getElementById("coffeeInput").value;
+            startPreparation(nb_coffee);
+        }
+    )
 }
-)
