@@ -1,0 +1,12 @@
+{
+  "name": "exercices_s02",
+  "version": "1.0.0",
+  "description": "Exercices de la semaine 2, fomation CDA",
+  "license": "ISC",
+  "author": "Peter Francois",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

@@ -31,10 +31,35 @@ function coffeeReady(i, randomNumber){
     result.appendChild(p);
 }
 
-if (document.getElementById("startBtn")){
-        document.getElementById("startBtn").addEventListener('click', function() {
-            const nb_coffee = document.getElementById("coffeeInput").value;
-            startPreparation(nb_coffee);
-        }
-    )
+
+document.getElementById("startBtn").addEventListener('click', function() {
+    const nb_coffee = document.getElementById("coffeeInput").value;
+    startPreparation(nb_coffee);
 }
+)
+
+const asyncOperation = new Promise(function(resolve, reject){
+    const nb_coffee = document.getElementById("coffeeInput").value;
+    for (let i = 0; i < nb_coffee; i++){
+    let randomNumber = make_one_coffee(i);
+    setTimeout(() => {
+        // On définit ici si l'opération est un succès ou un échec
+        // On peut changer en false pour simuler une erreur
+        const success = true; 
+
+        if (success) {
+            resolve("L'opération s'est déroulée avec succès !");
+        } else {
+            reject("L'opération a échoué !");
+        }
+    },randomNumber * 1000);
+}
+});
+
+asyncOperation
+    .then(result => {
+        console.log("Résultat :", result);
+    })
+    .catch(error => {
+        console.error("Erreur :", error);
+    });
