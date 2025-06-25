@@ -11,12 +11,6 @@ interface Maintainable {
     getNextMaintenanceDate(): Date;
 }
 
-// Interface d'un vehicule
-interface Vehicle {
-    brand: string,
-    year: number,
-    color: Color,
-}
 
 // Classe abstraite de base
 class Vehicle implements Maintainable {
@@ -24,15 +18,17 @@ class Vehicle implements Maintainable {
         public brand: string,
         public year: number,
         public color: Color,
+        public wires: number,
         protected maintenanceCost: number,
-        private nextMaintenanceDate: Date
+        private nextMaintenanceDate: Date,
         ){
             this.brand = brand;
             this.year = year;
             this.color = color;
+            this.wires = wires
         }
     getMaintenanceCost(): number{
-        return this.maintenanceCost
+        return this.maintenanceCost;
     }
     getNextMaintenanceDate(): Date{
         return this.nextMaintenanceDate;
@@ -41,42 +37,80 @@ class Vehicle implements Maintainable {
 
 // Classes dérivées
 class Car extends Vehicle {
-    doors: number;
-
-    constructor(
-        brand: string,
-        year: number,
-        color: Color,
-        doors: number,
-        maintenanceCost: number,
-        nextMaintenanceDate: Date)
-        {
-            super(brand, year, color, maintenanceCost, nextMaintenanceDate);
-            this.doors = doors
-        }
-}
-
-class Motorcycle extends Vehicle {
     isMotocycle: boolean;
+    doors: number;
+    needNewOil: Boolean;
+    needNewWires: boolean;
 
     constructor(
         brand: string,
         year: number,
         color: Color,
         isMotocycle: boolean,
+        doors: number,
+        wires: number,
         maintenanceCost: number,
-        nextMaintenanceDate: Date){
-            super(brand, year, color, maintenanceCost, nextMaintenanceDate);
-            this.isMotocycle = isMotocycle;
+        nextMaintenanceDate: Date,
+        needNewOil: boolean,
+        needNewWires: boolean
+       )
+        {
+            super(brand, year, color, wires, maintenanceCost, nextMaintenanceDate);
+            this.isMotocycle = isMotocycle
+            this.doors = doors;
+            this.needNewOil = needNewOil;
+            this.needNewWires = needNewWires;
+
         }
+    getMaintenanceCost(): number{
+        if(this.needNewOil){
+            this.maintenanceCost += 150;
+        }
+        if(this.needNewWires)
+        {
+            this.maintenanceCost += 300;
+        }
+        return this.maintenanceCost;
+    }
 }
 
-const ford = new Car ("Ford", 2022, Color.Black, 2, 200, new Date())
-const bandit = new Motorcycle("Suzuki", 2015, Color.Red, true, 200, new Date())
+class Motorcycle extends Vehicle {
+    isMotocycle: boolean;
+    doors: number;
+    needNewOil: Boolean
+    needNewWires: boolean
+    constructor(
+        brand: string,
+        year: number,
+        color: Color,
+        isMotocycle: boolean,
+        doors: number,
+        wires: number,
+        maintenanceCost: number,
+        nextMaintenanceDate: Date,
+        needNewOil: boolean,
+        needNewWires: boolean){
+            super(brand, year, color, wires, maintenanceCost, nextMaintenanceDate);
+            this.isMotocycle = isMotocycle
+            this.doors = doors;
+            this.needNewOil = needNewOil;
+            this.needNewWires = needNewWires;
+        }
+        getMaintenanceCost(): number{
+        if(this.needNewOil){
+            this.maintenanceCost += 50;
+        }
+        if(this.needNewWires)
+        {
+            this.maintenanceCost += 200;
+        }
+        return this.maintenanceCost;
+    }
+}
 
-console.log(ford.getNextMaintenanceDate())
-console.log(bandit.getNextMaintenanceDate())
+const ford = new Car ("Ford", 2022,Color.Black, false, 4, 4, 50, new Date(), true, true)
+const bandit = new Motorcycle("Suzuki", 2015, Color.Red, true, 2, 0, 30, new Date(), true, false)
 
+console.log(ford.getMaintenanceCost())
+console.log(bandit.getMaintenanceCost())
 
-// TODO
-// use VehicleInterface
