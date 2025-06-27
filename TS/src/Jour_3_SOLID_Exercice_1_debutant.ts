@@ -6,18 +6,16 @@ interface userInterface{
 class UserManager{
     private users: userInterface[] = [];
 
-    constructor(private name: string,private email: string) {
+    constructor(private name: string, private email: string) {
         if (!validationUser.isValidEmail(email)) throw new Error('Email invalide');
-        const user: userInterface = {name : this.name, email : this.email};
-        console.log("Utilisateur créé avec succès")
-        this.addUser(user);
+        this.addUser({name : this.name, email : this.email});
     }
     
     addUser(user: userInterface): void {
         //// Sauvegarde
         if(!this.users) throw Error ("Problème de la DataBase");
         if(!UserRepository.save(this.users, user)) throw Error ("Problème lors de la sauvegarde")
-
+        console.log("Utilisateur créé avec succès")
         //// Notification
         sendWelcomeNotification.welcome(user)
     }
