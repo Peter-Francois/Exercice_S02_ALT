@@ -6,12 +6,10 @@ interface userInterface{
 class UserManager{
     private users: userInterface[] = [];
 
-    constructor(private name: string, private email: string) {
-        if (!validationUser.isValidEmail(email)) throw new Error('Email invalide');
-        this.addUser({name : this.name, email : this.email});
-    }
+    constructor() { }
     
     addUser(user: userInterface): void {
+        if (!validationUser.isValidEmail(user.email)) throw new Error('Email invalide');
         //// Sauvegarde
         if(!this.users) throw Error ("Problème de la DataBase");
         if(!UserRepository.save(this.users, user)) throw Error ("Problème lors de la sauvegarde")
@@ -42,4 +40,6 @@ class sendWelcomeNotification{
 }
 
 
-const peter2 = new UserManager('Peter', 'fur@hotmail.fr')
+const userManager = new UserManager();
+const peter2: userInterface = {name: 'Peter', email: 'fur@hotmail.fr'}
+userManager.addUser(peter2)
