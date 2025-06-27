@@ -1,5 +1,8 @@
+import customerInterface from "./customerInterface";
+import orderItemInterface from "./orderItemInterface";
+
 export default interface orderInterface {
     id: string;
-    items: OrderItem[];
-    customerEmail: string;
+    customer: customerInterface;
+    items: orderItemInterface[];
 }
